@@ -2,24 +2,24 @@
 
 $products = [
     [
-        "name" => "Paper Squishy",
-        "price" => 8000
+        "name" => "DIY Paper Squishy",
+        "price" => 5000
     ],
     [
-        "name" => "Sponge Squishy",
+        "name" => "DIY Sponge Squishy",
         "price" => 10000
     ],
     [
-        "name" => "Flanel Keychain",
-        "price" => 12000
+        "name" => "Flanel Squishy",
+        "price" => 10000
     ],
     [
         "name" => "Painting by Numbers Kit",
         "price" => 35000
     ],
     [
-        "name" => "Sticker",
-        "price" => 3000
+        "name" => "5 pcs Momo Sticker",
+        "price" => 2500
     ],
     [
         "name" => "Pencil",
@@ -309,7 +309,7 @@ function formatRupiah($number)
 
     <!-- VALIDATION -->
 
-    <section class="card">
+    <section class="card validation-card">
 
         <h2>
             Validation Result
