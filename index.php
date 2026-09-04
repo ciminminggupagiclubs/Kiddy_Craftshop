@@ -28,6 +28,16 @@ $products = [
 ];
 
 $customerName = "";
+$phone = "";
+$phoneCountryCode = "+62";
+$email = "";
+$address = "";
+$rt = "";
+$rw = "";
+$kelurahan = "";
+$kecamatan = "";
+$kotaKabupaten = "";
+$kodepos = ""; 
 $isMember = false;
 $voucherCode = "";
 $selectedItems = [];
@@ -43,6 +53,16 @@ $total = 0;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $customerName = trim($_POST["customer_name"] ?? "");
+    $phone = trim($_POST["phone"] ?? "");
+    $phoneCountryCode = $_POST["phone_country_code"] ?? "+62";
+    $email = trim($_POST["email"] ?? "");
+    $address = trim($_POST["address"] ?? "");
+    $rt = trim($_POST["rt"] ?? "");
+    $rw = trim($_POST["rw"] ?? "");
+    $kelurahan = trim($_POST["kelurahan"] ?? "");
+    $kecamatan = trim($_POST["kecamatan"] ?? "");
+    $kotaKabupaten = trim($_POST["kota_kabupaten"] ?? "");
+    $kodepos = trim($_POST["kodepos"] ?? "");
     $isMember = isset($_POST["is_member"]);
     $voucherCode = trim($_POST["voucher_code"] ?? "");
 
@@ -51,6 +71,54 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // VALIDATION CUSTOMER
     if ($customerName === "") {
         $errors[] = "Customer name harus diisi";
+    }
+
+    if ($phone === "") {
+        $errors[] = "Phone number harus diisi";
+    }
+
+    if ($email === "") {
+        $errors[] = "Email harus diisi";
+    }
+
+    if ($address === "") {
+        $errors[] = "Alamat pengiriman harus diisi";
+    }
+
+    if ($rt === "") {
+        $errors[] = "RT harus diisi";
+    }
+
+    if ($rw === "") {
+        $errors[] = "RW harus diisi";
+    }
+
+    if ($kelurahan === "") {
+        $errors[] = "Kelurahan harus diisi";
+    }
+
+    if ($kecamatan === "") {
+        $errors[] = "Kecamatan harus diisi";
+    }
+
+    if ($kotaKabupaten === "") {
+        $errors[] = "Kota/Kabupaten harus diisi";
+    }
+
+    if ($kodepos === "") {
+        $errors[] = "Kode Pos harus diisi";
+    }
+
+    if ($rt !== "" && !preg_match('/^\d{3}$/', $rt)) {
+    $errors[] = "RT harus terdiri dari 3 digit angka";
+    }
+
+    if ($rw !== "" && !preg_match('/^\d{3}$/', $rw)) {
+    $errors[] = "RW harus terdiri dari 3 digit angka";
+    }
+
+    if ($kodepos !== "" && !preg_match('/^\d{5}$/', $kodepos)) {
+    $errors[] = "Kode Pos harus terdiri dari 5 digit angka";
     }
 
     // CARI PRODUK YANG DIPILIH
@@ -244,7 +312,7 @@ function formatRupiah($number)
                 <div>
 
                     <span>
-                        Customer Name
+                        Customer Name <b class="required">*</b>
                     </span>
 
                     <input
@@ -256,9 +324,125 @@ function formatRupiah($number)
 
                 </div>
 
+                <div>
+                    <span>
+                        Phone Number <b class="required">*</b>
+                    </span>
+
+                    <div class="phone-input">
+                        <select name="phone_country_code">
+                            <option value="+62"<?php echo $phoneCountryCode === "+62" ? "selected": "";?>>
+                                +62
+                            </option>
+                    <input
+                        type="tel"
+                        name="phone"
+                        value="<?php echo htmlspecialchars($phone); ?>"
+                        placeholder="Nomor telepon"
+                    >
+                    </div>
+                </div>
 
                 <div>
+                    <span>
+                        Email <b class="required">*</b>
+                    </span>
 
+                    <input
+                        type="email"
+                        name="email"
+                        value="<?php echo htmlspecialchars($email); ?>"
+                        placeholder="nama@email.com"
+                    >
+                </div>
+
+                <div>
+                    <span>
+                        Address <b class="required">*</b>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="address"
+                        value="<?php echo htmlspecialchars($address); ?>"
+                        placeholder="Alamat lengkap"
+                    >
+                </div>
+
+                <div>
+                    <span>
+                        RT/RW <b class="required">*</b>
+                    </span>
+
+                    <div class="rt-rw-input">
+                        <input
+                            type="text"
+                            name="rt"
+                            value="<?php echo htmlspecialchars($rt); ?>"
+                            placeholder="RT: 001"
+                >
+                        <input
+                            type="text"
+                            name="rw"
+                            value="<?php echo htmlspecialchars($rw); ?>"
+                            placeholder="RW: 002"
+                        >
+                    </div>
+                </div>
+
+                <div>
+                    <span>
+                        Kelurahan <b class="required">*</b>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="kelurahan"
+                        value="<?php echo htmlspecialchars($kelurahan); ?>"
+                        placeholder="Kelurahan / Desa"
+                    >
+                </div>
+
+                <div>
+                    <span>
+                        Kecamatan <b class="required">*</b>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="kecamatan"
+                        value="<?php echo htmlspecialchars($kecamatan); ?>"
+                        placeholder="Kecamatan"
+                    >
+                </div>
+
+                <div>
+                    <span>
+                        Kota/Kabupaten <b class="required">*</b>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="kota_kabupaten"
+                        value="<?php echo htmlspecialchars($kotaKabupaten); ?>"
+                        placeholder="Kota / Kabupaten"
+                    >
+                </div>
+
+                <div>
+                    <span>
+                        Kode Pos <b class="required">*</b>
+                    </span>
+
+                    <input
+                        type="text"
+                        name="kodepos"
+                        value="<?php echo htmlspecialchars($kodepos); ?>"
+                        placeholder="40000"
+                    >
+                </div>
+
+        <div>
                     <span>
                         Member
                     </span>
@@ -381,19 +565,43 @@ function formatRupiah($number)
 
 
         <?php if ($_SERVER["REQUEST_METHOD"] === "POST" && count($errors) === 0) { ?>
-
-            <div class="invoice-row">
-
-                <span>
-                    Customer
-                </span>
-
+            <div class="customer-info">
                 <strong>
                     <?php echo htmlspecialchars($customerName); ?>
                 </strong>
 
-            </div>
+                <span>
+                     <?php echo htmlspecialchars($phoneCountryCode . " " . $phone); ?>
+                </span>
 
+                <span>
+                    <?php echo htmlspecialchars($email); ?>
+                 </span>
+
+                 <span>
+                    <?php echo htmlspecialchars($address); ?>
+                </span>
+
+                <span>
+                   <?php echo "RT " . htmlspecialchars($rt) . " / RW " . htmlspecialchars($rw); ?>
+                </span>
+
+                 <span>
+                    <?php echo htmlspecialchars($kelurahan); ?>
+                </span>
+
+                 <span>
+                      <?php echo htmlspecialchars($kecamatan); ?>
+                </span>
+
+                 <span>
+                      <?php echo htmlspecialchars($kotaKabupaten); ?>
+                 </span>
+
+                 <span>
+                     <?php echo htmlspecialchars($kodepos); ?>
+                </span>
+            </div>
 
             <h3>
                 Items
